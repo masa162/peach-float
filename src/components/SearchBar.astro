@@ -1,0 +1,54 @@
+---
+import { onMount } from 'astro/client';
+import Fuse from 'fuse.js';
+let query = '';
+let results = [];
+---
+
+<div class="relative w-full max-w-xs">
+  <!-- 入力欄 -->
+  <input
+    type="search"
+    placeholder="Search…"
+    value={query}
+    onInput={(e) => query = e.target.value}
+    class="w-full rounded-lg border px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-peach-400"
+  />
+
+  <!-- 結果ドロップダウン -->
+  {query && results.length > 0 && (
+    <ul class="absolute left-0 right-0 z-10 mt-1 max-h-72 overflow-auto rounded-lg border bg-white dark:bg-gray-800">
+      {results.map((item) => (
+        <li key={item.item.id}>
+          <a
+            href={`/blog/${item.item.slug}/`}
+            class="block px-3 py-2 hover:bg-peach-100 dark:hover:bg-gray-700"
+            onClick={() => (query = '')}  /* クリック後に閉じる */
+          >
+            {item.item.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+<script client:load>
+  /** JSON を先に fetch → Fuse オブジェクトを作成 */
+  let fuse;
+  onMount(async () => {
+    const res = await fetch('/search-index.json');
+    const list = await res.json();
+    fuse = new Fuse(list, {
+      keys: ['title', 'description'],
+      threshold: 0.3,  // マッチ精度（0 完全一致 ←→ 1 ゆるい）
+    });
+  });
+
+  /** query が更新されたら検索実行 */
+  $: if (fuse && query) {
+    results = fuse.search(query).slice(0, 10); // 上位 10 件
+  } else {
+    results = [];
+  }
+</script>

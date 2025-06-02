@@ -1,0 +1,48 @@
+---
+/**
+ * グローバルナビの定義
+ * ページが増えたらここに追記するだけで OK
+ */
+import SearchBar from './SearchBar.astro';
+
+const nav = [
+  { href: '/',        label: 'Home' },
+  { href: '/about',   label: 'About' },
+  { href: '/blog',    label: 'Blog' },
+];
+---
+<header class="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+  <!-- ロゴ / サイト名 -->
+  <a href="/" class="text-xl font-semibold tracking-wide">
+    Peach&nbsp;Float
+  </a>
+
+  <!-- デスクトップ用検索バー -->
+  <div class="hidden md:block mr-4 w-56">
+    <SearchBar />
+  </div>
+
+  <!-- デスクトップ用ナビ -->
+  <nav class="hidden md:flex gap-6">
+    {nav.map(({ href, label }) => (
+      <a href={href} class="hover:text-peach-500 transition-colors">
+        {label}
+      </a>
+    ))}
+  </nav>
+
+  <!-- スマホ用ハンバーガー -->
+  <button id="nav-toggle"
+          class="md:hidden focus:outline-none"
+          aria-label="Toggle navigation">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor"
+         viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+</header>
+
+<!-- スマホ用ドロワー -->
+<nav id="mobile-nav"
+     class="md:hidden hidden flex-col gap-4 px-6 pb-6 bg-white border-t border-gray-100
