@@ -1,0 +1,27 @@
+---
+// ヒーローセクション – Peach Float
+// 必要に応じて props でタイトルやコピーを受け取れるようにしてもOK
+---
+<section class="relative isolate overflow-hidden bg-peach-50 dark:bg-gray-900">
+  <!-- 背景デコレーション -->
+  <div class="absolute -top-40 right-0 -z-10 transform-gpu overflow-hidden blur-3xl">
+    <div class="aspect-[801/1036] w-[50rem] rotate-[30deg] bg-gradient-to-tr from-peach-300 to-peach-500 opacity-30"></div>
+  </div>
+  <!-- コンテンツラッパー -->
+  <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+    <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+      Peach Float
+    </h1>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-gray-600 dark:text-gray-300">
+      あなたの日常を彩るマンガとストーリー。
+    </p>
+    <div class="mt-10 flex items-center gap-x-6">
+      <a href="/blog" class="rounded-md bg-peach-500 px-6 py-3 text-base font-semibold text-white shadow-md hover:bg-peach-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-500">
+        ブログを読む
+      </a>
+      <a href="#about" class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+        詳しく見る<span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

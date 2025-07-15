@@ -1,19 +1,23 @@
 ---
+// src/pages/index.astro (ドキュメント p.4 [cite: 10] を参考に修正)
 import BaseLayout from "../layouts/BaseLayout.astro";
+import EpisodeCard from "../components/EpisodeCard.astro"; // EpisodeCardも必要になります
+
+// データ取得や処理が必要な場合はここに記述します
+// const latest = await Astro.glob("../content/series/*/*/*.md");
+// latest.sort((a,b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 ---
-<BaseLayout>
-  <Fragment slot="title">Peach Float – Home</Fragment>
-
-  <main class="min-h-screen flex flex-col items-center justify-center gap-12">
-    <h1 class="text-6xl font-bold text-peach-600 dark:text-peach-400">
-      Peach Float
-    </h1>
-
-    <a href="#get-started"
-       class="rounded-full px-8 py-4 font-semibold text-white transition
-              bg-peach-500 hover:bg-peach-600 active:bg-peach-700
-              dark:bg-peach-600 dark:hover:bg-peach-500 dark:active:bg-peach-400">
-      Get Started
-    </a>
-  </main>
+<BaseLayout title="ホーム">
+  <section class="py-10">
+    <h1 class="text-4xl font-bold mb-6">最新話</h1>
+    <p>ここに最新話のリストなどが表示されます。</p>
+    {/* EpisodeCardを使用する場合の例 */}
+    {/* {latest && latest.length > 0 ? (
+      <div class="flex overflow-x-auto gap-4">
+        {latest.slice(0,6).map(ep => <EpisodeCard episode={ep} />)}
+      </div>
+    ) : (
+      <p>まだエピソードがありません。</p>
+    )} */}
+  </section>
 </BaseLayout>

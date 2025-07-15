@@ -1,30 +1,47 @@
 ---
+// src/layouts/BaseLayout.astro
 import "../styles/global.css";
-import Header from "../components/Header.astro";
+import Header from "../components/Header.astro"; // こちらがナビゲーションの役割と想定
 import ThemeToggle from "../components/ThemeToggle.astro";
+
+// ドキュメントのBaseLayout.astroサンプル(p.3)ではtitleとdescriptionをpropsで受け取っています [cite: 8]
+// 必要に応じて、以下のようにpropsの定義を追加することも検討できます。
+// const { title = "Peach Float Web", description = "オリジナルWebマンガ" } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang="ja" class="scroll-smooth bg-peach-50 dark:bg-gray-900">
+<html lang="ja" class="scroll-smooth dark:bg-gray-900">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- ページごとに <slot name="title" /> を渡したい場合はこちらで対応 -->
-    <title><slot name="title" /></title>
+    {/* ページごとに <slot name="title" /> を渡したい場合はこちらで対応
+      もし上記propsでtitleを受け取る場合は、以下のように変更できます。
+      <title>{title}</title> 
+    */}
+    <title><slot name="title" />Peach Float</title> {/* デフォルトのサイトタイトルなどを追記しても良いでしょう */}
 
-    <!-- ダークモード初期化スクリプト -->
-    <script src="/theme-init.js" inline></script>
+    {/* ダークモード初期化スクリプト */}
+    <script src="/theme-init.js" is:inline></script> {/* Astroでは is:inline が推奨されます */}
+
+    {/* ドキュメントのBaseLayout.astroサンプル(p.3)にはSeoコンポーネントの記述もあります [cite: 9] */}
+    {/* 例: import Seo from "../components/Seo.astro"; <Seo title={title} description={description} /> */}
   </head>
 
   <body class="font-sans text-gray-800 dark:text-gray-200 antialiased">
-    <!-- ヘッダー / ナビ -->
+    {/* ヘッダー / ナビ */}
     <Header />
 
-    <!-- メインコンテンツ -->
-    <main class="min-h-screen">
-      <slot />
+    {/* ヘッダーが固定になるケースを想定して pt-16 をつけています */}
+    <main class="min-h-screen pt-16">
+      <slot /> {/* ページ固有のコンテンツがここに挿入されます */}
     </main>
 
-    <!-- ダークモード切替ボタンなど -->
+    {/* フッター (ドキュメント p.3 のサンプルを参考に追記) [cite: 9] */}
+    <footer class="py-8 text-center text-sm opacity-60">
+      &copy; {new Date().getFullYear()} Peach Float
+    </footer>
+
+    {/* ダークモード切替ボタンなど */}
+    {/* ThemeToggleの適切な配置場所もご検討ください (フッターの上など) */}
     <ThemeToggle />
   </body>
 </html>
